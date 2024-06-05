@@ -94,8 +94,8 @@ export function getCategories() {
       });
     } catch (error) {
       console.error(error.message);
-      console.error(error.response.status); // Estado de la respuesta
-      console.error(error.response.headers); // Encabezados de la respuesta
+      //console.error(error.respon); // Estado de la respuesta
+     // console.error(error.response.headers); // Encabezados de la respuesta
       console.error("Error al obtener los tipos:", error.message);
     }
   };

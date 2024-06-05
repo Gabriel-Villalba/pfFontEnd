@@ -6,7 +6,7 @@ import store from './Redux/store/store.js'
 import App from './App.js';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import '../Styles/styles.scss';
+import '../src/Styles/styles.css';
 
 
 
