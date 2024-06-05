@@ -1,0 +1,83 @@
+
+body {
+  background-color: #f8f9fa;
+}
+
+.app-container {
+  background-color: #343a40;
+  color: #fff;
+  padding-top: 0.5rem ;
+  padding-bottom: 0.5rem;
+}
+
+.email-phone-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.store-header {
+  margin-top: 1rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.margin-left-1rem {
+  margin-left: 1rem;
+}
+
+/*Navbar*/
+
+.navbar {
+  background-color: #FF6F61;
+}
+
+.nav-link {
+  color: #fff;
+}
+
+
+/*Trajetas*/
+
+.card-header {
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*estilos para contenedores de tarjetas */
+
+.container.mt-5 {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/*estilos para contenedores de select*/
+
+.form-select-container {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+/*Botones de compras y favoritos  */
+
+.btn-outline-secondary-custom {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary-custom:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
