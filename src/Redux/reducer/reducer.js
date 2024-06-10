@@ -5,7 +5,7 @@ const initialState = {
     allProducts: [],
     categories: [],
     getCategories: [],
-    detailProducto: [],
+    detail: {},
     formData: {
         Nombre: '',
         Descripcion: '',
@@ -67,10 +67,12 @@ const initialState = {
   
       case "BY_CATEGORIES": //* este reducers si bien esta desarrollado, se esta usando una funcion de la app
         const allProducts = state.allProducts;
+        console.log('allProducts', allProducts)
         const categoriesFiltered = allProducts.filter((category) => {
           return (
             category.Categories[0].name &&
             category.Categories[0].name.includes(action.payload)
+      
           );
         });
         if (!categoriesFiltered.length) {
