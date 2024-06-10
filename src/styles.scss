@@ -125,3 +125,21 @@ form {
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+/* HomePage */
+.homePage{
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('./assets/diseño/Landing.png');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white; 
+  padding: 20px;
+
+}
