@@ -10,15 +10,13 @@ const Products = () => {
     const {id} = useParams();
 
     useEffect(() => {
-        dispatch(getAllProducts());
-     
-      }, [dispatch])
-      
+        dispatch(getAllProducts()); 
+      }, [dispatch])     
       // eslint-disable-next-line no-unused-vars
       const handleClickDelete = ()=>{
         dispatch(deleteProduct(id));
       }
-      
+   
       const products = useSelector((state) => state.allProducts)//bandera != 1 ? productosFiltrados : todoslosProdusctos
     //console.log(products)
 
@@ -35,6 +33,7 @@ return (
                     <h5 className="card-title">{product.Nombre}</h5>
                     <p className="card-text">{product.Descripcion}</p>
                     <p className="card-text">${product.Precio}</p>
+
                     {product.Categories && product.Categories.length > 0 && (
                         <div>
                             <h6>Categorías:</h6>
