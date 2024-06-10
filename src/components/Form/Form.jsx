@@ -134,6 +134,8 @@ const Form = () => {
 
   return (
     <div className='formulario-contenedor'>
+<div><title>Crear nuevo producto</title></div>
+      
       {successMessage && <p>{successMessage}</p>}
       {!successMessage && <p>{errorMessage}</p>}
       <form onSubmit={handleSubmit}>

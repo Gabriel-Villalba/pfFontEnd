@@ -41,7 +41,7 @@ function App() {
  //*************************** */
   const handleSearch = (term) => {
     setSearchTerm(term);
-  };
+  }
   //*********FILTRADO *******************//
   // eslint-disable-next-line no-undef
 
