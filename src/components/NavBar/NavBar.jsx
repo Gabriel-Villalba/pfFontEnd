@@ -10,7 +10,7 @@ export default function NavBar() {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">HOME</Link>
+                        <Link className="nav-link" to="/home">HOME</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/products">PRODUCTS</Link>

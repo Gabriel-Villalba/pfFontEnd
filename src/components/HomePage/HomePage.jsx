@@ -1,9 +1,11 @@
-
-export default function HomePage() {
+ const  HomePage= ()=> {
     return (
-    <div>
-        <h1>HOME</h1>
+    <div className="homePage">
+    
 
     </div>
     );
 }
+
+
+export default HomePage;

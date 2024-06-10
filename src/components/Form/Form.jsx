@@ -4,6 +4,11 @@ import axios from 'axios';
 import { actualizarDatosFormulario, actualizarDatosValidaciones, getCategories } from '../../Redux/action/action.js';
 import { validateForm } from './formValidations.js';
 import { CREATE_PRODUCT_url } from '../../Redux/URLs/URLs.js';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { AdvancedImage } from '@cloudinary/react';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
+
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -13,6 +18,10 @@ const Form = () => {
   const [showValidation, setShowValidation] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+
+  const cld = new Cloudinary({ cloud: { cloudName: 'dkftrq1gu' } });
+
 
   useEffect(() => {
     dispatch(getCategories());
@@ -39,6 +48,22 @@ const Form = () => {
       setShowValidation(prevState => ({ ...prevState, [name]: true }));
     } else {
       setShowValidation(prevState => ({ ...prevState, [name]: false }));
+    }
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'product_images'); 
+
+    try {
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/dkftrq1gu/image/upload`, formData);
+      const imageUrl = response.data.secure_url;
+      setUploadedImageUrl(imageUrl);
+      dispatch(actualizarDatosFormulario({ Imagen_URL: imageUrl }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
 
@@ -100,11 +125,18 @@ const Form = () => {
     }
   };
 
+  const img = cld.image(uploadedImageUrl)
+  .format('auto')
+  .quality('auto')
+  .resize(auto().gravity(autoGravity()).width(500).height(500));
+
+
+
   return (
-    <div >
+    <div className='formulario-contenedor'>
       {successMessage && <p>{successMessage}</p>}
       {!successMessage && <p>{errorMessage}</p>}
-      <form className='formulario-contenedor' onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <input
             className='campos'
@@ -182,18 +214,21 @@ const Form = () => {
         <div>
           <input
             className='campos'
-            type="text"
-            id="Imagen_URL"
-            name="Imagen_URL"
-            placeholder="Imagen URL"
-            value={formData.Imagen_URL}
-            onChange={handleChange}
-            onFocus={() => handleFocus('Imagen_URL')}
-            onBlur={() => handleBlur('Imagen_URL')}
+            type="file"
+            id="Imagen"
+            name="Imagen"
+            onChange={handleFileChange}
+            onFocus={() => handleFocus('Imagen')}
+            onBlur={() => handleBlur('Imagen')}
             required
           />
-          {showValidation.Imagen_URL && validations.Imagen_URL && <p className='Validacion'>{validations.Imagen_URL}</p>}
+          {showValidation.Imagen && validations.Imagen && <p className='Validacion'>{validations.Imagen}</p>}
         </div>
+        {uploadedImageUrl && (
+          <AdvancedImage cldImg={img} />
+        )}
+        
+
         <div>
           <label className='campoLabelSlect' htmlFor="onOffer">En oferta:</label>
           <input
