@@ -1,22 +1,20 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  useParams } from 'react-router-dom';
-import { deleteProduct, getAllProducts} from "../../Redux/action/action";
+
+import { Link } from 'react-router-dom';
+import { getAllProducts} from "../../Redux/action/action";
  
 //import axios from 'axios';
 
 const Products = () => {
     const dispatch = useDispatch(); 
-    const {id} = useParams();
+   
 
     useEffect(() => {
         dispatch(getAllProducts()); 
       }, [dispatch])     
       // eslint-disable-next-line no-unused-vars
-      const handleClickDelete = ()=>{
-        dispatch(deleteProduct(id));
-      }
-   
+  
       const products = useSelector((state) => state.allProducts)//bandera != 1 ? productosFiltrados : todoslosProdusctos
     //console.log(products)
 
@@ -30,8 +28,9 @@ return (
                 <div className="card h-100">
                     <img src={product.Imagen_URL} className="card-img-top" alt={product.Nombre} />
                 <div className="card-body">
-                    <h5 className="card-title">{product.Nombre}</h5>
-                    <p className="card-text">{product.Descripcion}</p>
+                    <h5 className="card-title">
+                        <Link to={`/products/${product.id}`}>{product.Nombre}</Link>
+                    </h5>
                     <p className="card-text">${product.Precio}</p>
 
                     {product.Categories && product.Categories.length > 0 && (

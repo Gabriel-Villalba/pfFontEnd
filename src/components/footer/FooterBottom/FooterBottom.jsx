@@ -11,7 +11,6 @@ const FooterBottom = () => {
                     </div>
 
                     <div className="col-md-6 template-by">
-                      
                     </div>
                 </div>
             </div>
