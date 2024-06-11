@@ -32,17 +32,13 @@ export function getProductsByName(name) {
 export function getProductsById(id) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(GET_PRODUCT_url`${id}`);
-      //console.log(id)
-
-      dispatch({
-        type: "GET_PRODUCT_BY_ID",
-
-        payload: response.data?.length || response.data,
-      });
-      //console.log(response.data)
+      const response = await axios.get(`${GET_PRODUCT_url}${id}`);
+        dispatch({
+            type: "GET_PRODUCT_BY_ID",
+            payload: response.data,
+        });
     } catch (error) {
-      console.error("Error al obtener el Producto:", error.message);
+        console.error("Error al obtener el Producto:", error.message);
     }
   };
 }
@@ -75,13 +71,13 @@ export const deleteProduct = (id) => {
   };
 };
  //********ACTUALIZAR PRODUCTO ***** */
- export const updateProducts = (id) => {
-  return {
-        type: "UPDATEPRODUCT",
-        //payload,
-  }
+//  export const updateProducts = (id) => {
+//   return {
+//         type: "UPDATEPRODUCT",
+//         //payload,
+//   }
   
-};
+// };
  
 //********CARGAMOS LAS CATEGORIAS EXISTENTES******** */
 export function getCategories() {
@@ -94,8 +90,8 @@ export function getCategories() {
       });
     } catch (error) {
       console.error(error.message);
-      console.error(error.response.status); // Estado de la respuesta
-      console.error(error.response.headers); // Encabezados de la respuesta
+      //console.error(error.respon); // Estado de la respuesta
+     // console.error(error.response.headers); // Encabezados de la respuesta
       console.error("Error al obtener los tipos:", error.message);
     }
   };

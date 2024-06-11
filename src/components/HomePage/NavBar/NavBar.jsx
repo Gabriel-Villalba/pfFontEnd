@@ -1,5 +1,4 @@
 import { Link , NavLink} from 'react-router-dom';
-import Logout from "../loginAuht0/Logout/Logout";
 
 export default function NavBar() {
     return (
@@ -17,9 +16,6 @@ export default function NavBar() {
                         <Link className="nav-link" to="/products">PRODUCTS</Link>
                     </li>
                 </ul>
-                <div>
-                    <Logout />
-                </div>
             </div>
             <button className="nav-itemCreate">
                         <NavLink className="nav-linkCreate" to="/form">CREATE PRODUCT</NavLink>

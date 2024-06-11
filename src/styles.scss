@@ -1,3 +1,6 @@
+$font-family-base: 'Arial, sans-serif';
+@import '~bootstrap/scss/bootstrap';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 body {
   background-color: #f8f9fa;
@@ -61,6 +64,20 @@ body {
   padding-bottom: 10px;
 }
 
+/* formulario */
+.formulario-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} 
 /*estilos para contenedores de select*/
 
 .form-select-container {
@@ -80,4 +97,31 @@ body {
   color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
+}
+
+/* LandingPage */
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('./assets/diseño/Landing.png');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white; 
+  padding: 20px;
+}
+
+.login-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: rgba(0, 123, 255, 0.8); 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
