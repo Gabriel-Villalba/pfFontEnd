@@ -1,18 +1,18 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes,useLocation  } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage.jsx";
-import Product from "./components/Products/Products.jsx";
-//import Detail from "./components/Detail/Detail.jsx";
-import Nav from "./components/";
+import Products from "./components/Products/Products.jsx";
+import Detail from "./components/Detail/Detail.jsx";
+import Nav from "./components/NavBar/NavBar.jsx";
 import Form from "./components/Form/Form.jsx"
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
+import LandingPage from "./components/Landing/LandinPage.jsx";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { GET_CATEGORIAS_url } from "./Redux/URLs/URLs.js";
+import { useDispatch, useSelector } from "react-redux";
 import {
   filterByCategories,
   orderByPrice,
   getAllProducts,
+  getCategories,
 } from "./Redux/action/action.js";
 //import { Button } from 'bootstrap';
 
@@ -20,23 +20,24 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [sortOrder] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const [categories, setCategories] = useState([]);
   console.log(searchTerm);
   const dispatch = useDispatch();
+  const location = useLocation(); 
 
   useEffect(() => {
-    const mostrarCategorias = async () => {
-      try {
-        const categoryResponse = await axios.get(GET_CATEGORIAS_url);
-        const categorias = (await categoryResponse).data;
-        setCategories(categorias);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    mostrarCategorias();
-  }, []);
+  dispatch(getCategories())
+  },
+  
+  [dispatch]);
+  const listcategories = useSelector(state => state.categories)
+
+  useEffect(()=> {
+    setCategories(listcategories) 
+  
+  },
+  [listcategories])
  //*************************** */
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -46,8 +47,8 @@ function App() {
 
   const handleCategoriesFilter = (e) => {
     e.preventDefault();
-    // eslint-disable-next-line eqeqeq
-    if (e.target.value != "") {
+    if (e.target.value !== "") {
+      setSelectedCategory(e.target.value)
        dispatch(filterByCategories(e.target.value));
     } else {
        dispatch(getAllProducts());
@@ -55,20 +56,27 @@ function App() {
   };
 
   //**************ORDENAMIENTO POT PRECIO********** */
-  const setSortOrder = (event) => {
-    dispatch(orderByPrice(event.target.value));
-  };
+
+  const handelSelectChange=(e)=> {
+    dispatch(orderByPrice(e.target.value))
+    setSortOrder(e.target.value)
+
+  }
+  // const setSortOrder = (event) => {
+  //   dispatch(orderByPrice(event.target.value));
+  // };
 
   return (
     <div>
+      
             <div className="bg-dark text-white py-2">
                 <div className="container d-flex justify-content-between">
                     <p className="mb-0">support@email.com</p>
                     <p className="mb-0">+012-345-6789</p>
                 </div>
             </div>
-            <Nav />
-         
+            {location.pathname !== '/' && <Nav />}
+            {location.pathname !== '/' && location.pathname !== '/form' && location.pathname !== '/home' && (
             <div className="container mt-3">
                 <div className="row align-items-center">
                     <div className="col-md-2">
@@ -82,7 +90,7 @@ function App() {
                                     </button>
                                     <button className="btn btn-outline-secondary">
                                     <i className="fas fa-shopping-cart"></i>
-                                     </button>
+                                    </button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +100,7 @@ function App() {
                         <label>
                         <select
                             className="form-select"
-                           // value={selectedCategory}
+                            value={selectedCategory}
                             onChange={(e) => handleCategoriesFilter(e)}>
                             <option value="">All</option>
                             {categories.map(category => (
@@ -108,7 +116,7 @@ function App() {
                             <select 
                                 className="form-select"
                                 value={sortOrder} 
-                                onChange={(e) => setSortOrder(e)}>
+                                onChange={(e) => handelSelectChange(e)}>
                                 <option value="">Precio</option>
                                 <option value="asc">Ascendente</option>
                                 <option value="desc">Descendente</option>
@@ -118,11 +126,15 @@ function App() {
                 </div>
             
             </div>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/products" element={<Product />} />
-                <Route path="/form" element={<Form />} />
-            </Routes>
+                )}
+      <Routes>
+      <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/products" element={<Products />} /> 
+        <Route path="/form" element={<Form />} />
+        <Route path="/products/:id" element={<Detail />} />  
+        
+      </Routes>
     
         </div>
     );

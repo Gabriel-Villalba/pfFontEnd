@@ -1,14 +1,11 @@
-import React from "react"
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-//import './styles.scss'; 
+import './styles.scss'; 
+import App from './App.js'
 import store from './Redux/store/store.js'
-import App from './App.js';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
-//import '../src/Styles/styles.css';
 import {Auth0Provider} from '@auth0/auth0-react'
 
 
