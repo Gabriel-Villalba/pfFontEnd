@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import LogoutButton from '../loginAuht0/Logout/Logout';
+import { Link , NavLink} from 'react-router-dom';
+
 export default function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#FF6F61' }}>
@@ -15,14 +15,11 @@ export default function NavBar() {
                     <li className="nav-item">
                         <Link className="nav-link" to="/products">PRODUCTS</Link>
                     </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/form">ADMIN</Link>
-                    </li>
-                    <div className='Logout'>  <LogoutButton/></div>
-                
-            
                 </ul>
             </div>
+            <button className="nav-itemCreate">
+                        <NavLink className="nav-linkCreate" to="/form">CREATE PRODUCT</NavLink>
+            </button>
         </nav>
     );
 }
