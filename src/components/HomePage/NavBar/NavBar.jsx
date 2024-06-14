@@ -15,11 +15,11 @@ export default function NavBar() {
                     <li className="nav-item">
                         <Link className="nav-link" to="/products">PRODUCTS</Link>
                     </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/form">ADMIN</Link>
-                    </li>
                 </ul>
             </div>
+            <button className="nav-itemCreate">
+                        <NavLink className="nav-linkCreate" to="/form">CREATE PRODUCT</NavLink>
+            </button>
         </nav>
     );
 }

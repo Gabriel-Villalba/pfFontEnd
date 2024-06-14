@@ -38,11 +38,11 @@ const initialState = {
         };
 
       case "GET_PRODUCT_BY_NAME":
-              const product= state.allProducts.filter((nombre) =>
-                  nombre.Nombre?.includes(action.payload))
+              // const product= state.allProducts.filter((nombre) =>
+              //     nombre.Nombre?.includes(action.payload))
               return {
                 ...state,
-              allProducts: product
+              allProducts: action.payload
         };       
         
       case "GET_PRODUCT_BY_ID":
