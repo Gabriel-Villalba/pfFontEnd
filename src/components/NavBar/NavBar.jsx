@@ -18,7 +18,7 @@ export default function NavBar() {
                     <li className="nav-item">
                         <Link className="nav-link" to="/form">ADMIN</Link>
                     </li>
-                    <div className='Logout'>  <LogoutButton/></div>
+                    <div className='botonLogOut'> <LogoutButton/></div>
                 
             
                 </ul>

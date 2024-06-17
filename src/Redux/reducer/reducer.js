@@ -25,7 +25,11 @@ const initialState = {
       Imagen_URL: '',
       onOffer: false,
       Brand: '',
-  }
+  },
+    carrito:[],
+    user: {
+      id: null,
+  },
   };
   
   export default function rootReducer(state = initialState, action) {
@@ -37,19 +41,52 @@ const initialState = {
           allProducts: action.payload,
         };
 
-      case "GET_PRODUCT_BY_NAME":
-              const product= state.allProducts.filter((nombre) =>
-                  nombre.Nombre?.includes(action.payload))
+        case "GET_PRODUCT_BY_NAME":
+              // const product= state.allProducts.filter((nombre) =>
+              //     nombre.Nombre?.includes(action.payload))
               return {
                 ...state,
-              allProducts: product
-        };       
+              allProducts: action.payload
+        };      
+
+          case "ADD_TO_CART":
+            const existingItem = state.carrito.find(item => item.productId === action.payload.productId);
+            if (existingItem) {
+                return {
+                    ...state,
+                    carrito: state.carrito.map(item =>
+                        item.productId === action.payload.productId
+                            ? { ...item, quantity: item.quantity + action.payload.quantity }
+                            : item
+                    )
+                };
+            } else {
+                return {
+                    ...state,
+                    carrito: [...state.carrito, action.payload],
+                };
+            }
+
+        case "GET_CART":
+            return {
+                ...state,
+                carrito: action.payload,
+            };
+
+        case "REMOVE_FROM_CART":
+            return {
+                ...state,
+                carrito: state.carrito.filter(item => item.productId !== action.payload.productId),
+            };
+
+
         
       case "GET_PRODUCT_BY_ID":
             return {
               ...state,
               detail: action.payload,
             };
+
       case "POST_PRODUCTS":
           return state;
         

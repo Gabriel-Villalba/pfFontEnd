@@ -6,6 +6,8 @@ import {
   //UPDATE_PRODUCT_url,
   //DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
+  GET_PRODUCT_NAME_url,
+  ADD_TO_CART
   
 } from "../URLs/URLs.js";
 //*************OBTENER TODOS LOS PRODUCTOS****** */
@@ -22,9 +24,16 @@ export function getAllProducts() {
 
 //**********OBTENER PRODUCTOS POR SU NOMBRE ***** */
 export function getProductsByName(name) {
-  return {
-    type: "GET_PRODUCT_BY_NAME",
-    payload: name,
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${GET_PRODUCT_NAME_url}${name}`);
+        dispatch({
+            type: "GET_PRODUCT_BY_NAME",
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error("Error al obtener el Producto:", error.message);
+    }
   };
 }
 //******obtener producto por id para el details***** */
@@ -70,6 +79,22 @@ export const deleteProduct = (id) => {
     }
   };
 };
+
+
+export const addToCart = (item) => (dispatch, getState) => {
+  const state = getState();
+  const product = state.allProducts.find(p => p.id === item.productId);
+  const cartItem = {
+      ...item,
+      product
+  };
+  dispatch({
+      type: "ADD_TO_CART",
+      payload: cartItem
+  });
+};
+
+
  //********ACTUALIZAR PRODUCTO ***** */
  export const updateProducts = (id) => {
   return {

@@ -1,7 +1,5 @@
-import React from 'react'
-//import Redes from './redes/Redes.jsx'
 const FooterBottom = () => {
-  return (
+    return (
      //<!-- Footer Bottom Start -->
         <div className="footer-bottom">
             <div className="container">
@@ -16,7 +14,7 @@ const FooterBottom = () => {
             </div>
         </div>
   //<!-- Footer Bottom End -->       
-  )
+    )
 }
 
 export default FooterBottom
