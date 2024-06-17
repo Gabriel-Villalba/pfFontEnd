@@ -25,7 +25,9 @@ const initialState = {
       Imagen_URL: '',
       onOffer: false,
       Brand: '',
-  }
+  },
+  users:"",
+  cart:[]
   };
   
   export default function rootReducer(state = initialState, action) {
@@ -120,7 +122,14 @@ const initialState = {
             ...action.payload
           }
         };
-  
+      case "LOGIN": 
+      console.log(action.payload[0])
+      console.log(action.payload[1])
+      return{
+        ...state,
+        users: action.payload[0],
+        cart : action.payload[1]
+      }
       default:
         //console.log("pasando por nada");
         return state;

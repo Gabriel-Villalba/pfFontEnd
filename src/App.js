@@ -17,25 +17,23 @@ import {
 //import { Button } from 'bootstrap';
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [setSearchTerm] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortOrder, setSortOrder] = useState('');
   const [categories, setCategories] = useState([]);
-  console.log(searchTerm);
+  //console.log(searchTerm);
   const dispatch = useDispatch();
   const location = useLocation(); 
 
   useEffect(() => {
   dispatch(getCategories())
-  },
-  
-  [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
   const listcategories = useSelector(state => state.categories)
 
   useEffect(()=> {
     setCategories(listcategories) 
-  
   },
   [listcategories])
  //*************************** */
