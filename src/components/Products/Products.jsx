@@ -8,7 +8,7 @@ const Products = () => {
     const dispatch = useDispatch(); 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(6);
-    const [quantities, setQuantities] = useState({});
+
 
     useEffect(() => {
         dispatch(getAllProducts()); 
@@ -37,16 +37,9 @@ const Products = () => {
     //console.log('currentProducts',currentProducts)
 
     const handleAddToCart = (product) => {
-        const quantity = quantities[product.id] || 1;
-        dispatch(addToCart({ ...product, quantity }));
+        dispatch(addToCart({ ...product, quantity: 1 }));
     };
 
-    const handleQuantityChange = (productId, quantity) => {
-        setQuantities(prevQuantities => ({
-            ...prevQuantities,
-            [productId]: quantity
-        }));
-    };
 
     return (
         <div className="container mt-5">
@@ -72,17 +65,10 @@ const Products = () => {
                                         </ul>
                                     </div>
                                 )}
-
-                                <input 
-                                    type="number" 
-                                    value={quantities[product.id] || 1} 
-                                    onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
-                                    min="1"
-                                />
                                 <button 
                                     className="btn btn-outline-secondary mt-2" 
                                     onClick={() => handleAddToCart(product)}>
-                                    <i className="fas fa-shopping-cart"></i> Añadir al carrito
+                                    <i className="fas fa-shopping-cart"></i>
                                 </button>
                             </div>
                         </div>
