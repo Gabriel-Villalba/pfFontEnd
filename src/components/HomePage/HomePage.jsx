@@ -1,8 +1,10 @@
- const  HomePage= ()=> {
-    return (
-    <div className="homePage">
-    
+import homeImage from '../../assets/diseño/Home.jpg'
 
+
+const  HomePage= ()=> {
+    return (
+        <div className="homePage">
+        <img src={homeImage} alt="Background" className="backgroundImage" />
     </div>
     );
 }
