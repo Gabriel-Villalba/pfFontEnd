@@ -1,4 +1,4 @@
-import { Route, Routes,useLocation  } from "react-router-dom";
+import { Route, Routes,useLocation, useNavigate  } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import Products from "./components/Products/Products.jsx";
 import Detail from "./components/Detail/Detail.jsx";
@@ -6,6 +6,8 @@ import Nav from "./components/NavBar/NavBar.jsx";
 import Form from "./components/Form/Form.jsx"
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import LandingPage from "./components/Landing/LandinPage.jsx";
+import Footer from "./components/footer/Footer.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,6 +27,7 @@ function App() {
   console.log(searchTerm);
   const dispatch = useDispatch();
   const location = useLocation(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
   dispatch(getCategories())
@@ -66,6 +69,11 @@ function App() {
   //   dispatch(orderByPrice(event.target.value));
   // };
 
+
+  const handleCartClick = () => {
+    navigate('/cart');
+};
+
   return (
     <div>
       
@@ -85,12 +93,9 @@ function App() {
                         <div className="col-md-8 d-flex align-items-center">
                             <SearchBar onSearch={handleSearch} />
                             <div className="ms-3">
-                                    <button className="btn btn-outline-secondary me-2">
-                                    <i className="fas fa-heart"></i>
-                                    </button>
-                                    <button className="btn btn-outline-secondary">
+                            <button className="btn btn-outline-secondary" onClick={handleCartClick}>
                                     <i className="fas fa-shopping-cart"></i>
-                                    </button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -132,10 +137,11 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/products" element={<Products />} /> 
         <Route path="/form" element={<Form />} />
-        <Route path="/products/:id" element={<Detail />} />  
+        <Route path="/products/:id" element={<Detail />} /> 
+        <Route path="/cart" element={<Cart />} /> 
         
       </Routes>
-    
+      <Footer />
         </div>
     );
 }

@@ -25,7 +25,10 @@ const initialState = {
       Imagen_URL: '',
       onOffer: false,
       Brand: '',
-  }
+  },
+  // users:"",
+  cart:[],
+  // productCart:[]
   };
   
   export default function rootReducer(state = initialState, action) {
@@ -38,11 +41,11 @@ const initialState = {
         };
 
       case "GET_PRODUCT_BY_NAME":
-              const product= state.allProducts.filter((nombre) =>
-                  nombre.Nombre?.includes(action.payload))
+              // const product= state.allProducts.filter((nombre) =>
+              //     nombre.Nombre?.includes(action.payload))
               return {
                 ...state,
-              allProducts: product
+              allProducts: action.payload
         };       
         
       case "GET_PRODUCT_BY_ID":
@@ -120,7 +123,35 @@ const initialState = {
             ...action.payload
           }
         };
-  
+      case "LOGIN": 
+      console.log(action.payload[0])
+      console.log(action.payload[1])
+      return{
+        ...state,
+        users: action.payload[0],
+        cart : action.payload[1]
+      }
+      case "ADD_TO_CART":
+        return {
+            ...state,
+            cart: [...state.cart, action.payload]
+        };
+        case "UPDATE_CART_QUANTITY":
+          return {
+              ...state,
+              cart: state.cart.map(item => 
+                  item.product.id === action.payload.productId 
+                      ? { ...item, quantity: action.payload.quantity }
+                      : item
+              )
+          };
+
+      case "REMOVE_FROM_CART":
+          return {
+              ...state,
+              cart: state.cart.filter(item => item.product.id !== action.payload.productId)
+          };
+
       default:
         //console.log("pasando por nada");
         return state;
