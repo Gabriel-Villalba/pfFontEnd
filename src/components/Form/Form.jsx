@@ -133,8 +133,16 @@ const Form = () => {
 
 
   return (
+    <div> 
+    <br /> 
+    <h2 className="title">Crear Productos</h2>
+    <br />
     <div className='formulario-contenedor'>
+<<<<<<< HEAD
 <div><title>Crear nuevo producto</title></div>
+=======
+    
+>>>>>>> e559f822ffff022608649116a68b64d28563e565
       
       {successMessage && <p>{successMessage}</p>}
       {!successMessage && <p>{errorMessage}</p>}
@@ -172,11 +180,11 @@ const Form = () => {
         <div>
           <input
             className='campos'
-            type="number"
+            type="text"
             id="Precio"
             name="Precio"
             placeholder="Precio"
-            value={formData.Precio}
+            value={formData.Precio === 0 ? '' : formData.Precio}
             onChange={handleChange}
             onFocus={() => handleFocus('Precio')}
             onBlur={() => handleBlur('Precio')}
@@ -187,11 +195,11 @@ const Form = () => {
         <div>
           <input
             className='campos'
-            type="number"
+            type="text"
             id="Stock"
             name="Stock"
             placeholder="Stock"
-            value={formData.Stock}
+            value={formData.Stock === 0 ? '' : formData.Stock}
             onChange={handleChange}
             onFocus={() => handleFocus('Stock')}
             onBlur={() => handleBlur('Stock')}
@@ -242,7 +250,6 @@ const Form = () => {
           />
         </div>
         <div className='marco_select'>
-          <label className='campoLabelSlect' htmlFor="categorias">Seleccionar categoría:</label>
           <select
             className='campos'
             id="categorias"
@@ -260,6 +267,7 @@ const Form = () => {
         </div>
         <button type="submit">Create Product</button>
       </form>
+    </div>
     </div>
   );
 };

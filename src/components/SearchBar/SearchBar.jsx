@@ -23,6 +23,14 @@ const SearchBar = () => {
     }
   };
 
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      dispatch(getProductsByName(name));
+    }
+  };
   return (
     <div>
       <input
@@ -31,6 +39,7 @@ const SearchBar = () => {
 
         //onKeyPress={handleSearch}
        onChange={(e)=>handleInputChange(e)} 
+       onKeyDown={handleKeyDown} 
       />
       <button type="submit" onClick= {(e)=>handleSubmit(e)}>
         Buscar

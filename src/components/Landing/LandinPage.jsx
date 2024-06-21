@@ -22,6 +22,7 @@ const LandingPage = () => {
 
 
     return (
+<<<<<<< HEAD
         <div className="landing-page">
             {isAuthenticated ? (
                     <> 
@@ -31,6 +32,23 @@ const LandingPage = () => {
                     (<LoginButton/>)
             }
           
+=======
+        <div className="landing-page-container">
+            <div className="landing-page">
+                {isAuthenticated ? (
+                    <> 
+                    <Profile/>
+                    <div > <LogOutButton/> </div>
+                    </>) : 
+                    (
+                    
+                    <div className="auth-buttons"><LoginButton/></div>)
+                }
+            </div>
+            <div className='Landingspace'></div>
+            <div className='Landing2'></div>
+            <div className='Landing3'></div>
+>>>>>>> e559f822ffff022608649116a68b64d28563e565
 
         </div>
     );
