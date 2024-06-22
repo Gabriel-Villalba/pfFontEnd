@@ -79,7 +79,7 @@ function App() {
       
             <div className="bg-dark text-white py-2">
                 <div className="container d-flex justify-content-between">
-                    <p className="mb-0">support@email.com</p>
+                    <p className="mb-0">bellamusevip@gmail.com</p>
                     <p className="mb-0">+012-345-6789</p>
                 </div>
             </div>

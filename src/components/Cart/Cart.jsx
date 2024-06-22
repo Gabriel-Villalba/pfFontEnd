@@ -29,6 +29,13 @@ const Cart = () => {
     return (
         <div className="cart-container">
             <h1 className="cart-title">Carrito de Compras</h1>
+            <div className="cart-header">
+                <span className="header-item">Producto</span>
+                <span className="header-item">Precio</span>
+                <span className="header-item">Cantidad</span>
+                <span className="header-item">Total</span>
+                <span className="header-item">Eliminar</span>
+            </div>
             <ul className="cart-list"                               >
                 {cart.map(item => (
                     <li key={item.product.id} className="cart-item">
@@ -48,7 +55,7 @@ const Cart = () => {
                 ))}
                 
             </ul>
-            <h2 className="total-price">Total: ${totalPrice.toFixed(2)}</h2>
+            <h2 className="total-price">${totalPrice.toFixed(2)}</h2>
             <button onClick={handlePurchase} className="purchase-button">Comprar</button>
         </div>
     );
