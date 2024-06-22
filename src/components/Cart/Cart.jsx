@@ -8,7 +8,7 @@ const Cart = () => {
 //console.log('cart', cart)
 
     const handleQuantityChange = (productId, quantity) => {
-        if (quantity >= 1) {
+        if (quantity >= 1 && quantity <= 10) {
             dispatch(updateCartQuantity(productId, quantity));
         }
     };

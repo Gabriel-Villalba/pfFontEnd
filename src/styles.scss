@@ -145,6 +145,29 @@ form {
   border-color: #6c757d;
 }
 
+.botonCerrar{
+  background-color: #e7e7e7;
+  color: #343a40;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 0.5;
+  flex-shrink: 0; 
+  flex-shrink: 0; 
+  margin-right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  padding: 5px , 5px;
+  font-size: 16px; 
+  font-weight: bold;
+}
+
+.botonCerrar:hover {
+  background-color: #c82333;
+}
+
 /* LandingPage */
 .landing-page-container {
   background-color: #EEF0F2;

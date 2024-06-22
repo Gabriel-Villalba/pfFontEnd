@@ -16,8 +16,16 @@ const Products = () => {
     }, [dispatch]);     
 
     const products = useSelector((state) => state.allProducts);
+    const cart = useSelector((state) => state.cart);
 
-    //console.log('products',products)
+    useEffect(() => {
+        const addedItems = {};
+        cart.forEach(item => {
+            addedItems[item.product.id] = true;
+        });
+        setAddedToCart(addedItems);
+    }, [cart]);
+
 
     useEffect(() => {
         setCurrentPage(1);
@@ -67,10 +75,10 @@ const Products = () => {
                                         </ul>
                                     </div>
                                 )}
-                                <button 
+                                <button
                                     className={`btn mt-2 ${addedToCart[product.id] ? 'btn-added' : 'btn-outline-secondary'}`}
-                                    onClick={() => handleAddToCart(product)} disabled={addedToCart[product.id]}>
-                                        
+                                    onClick={() => handleAddToCart(product)}
+                                    disabled={addedToCart[product.id]}>
                                     <i className="fas fa-shopping-cart"></i>
                                     {addedToCart[product.id] ? 'En el carrito' : 'Agregar al carrito'}
                                 </button>
@@ -79,7 +87,7 @@ const Products = () => {
                     </div>
                 ))}
             </div>
-            <Paginado items={products} pageSize={6} onPageChange={handlePageChange} />
+            <Paginado items={products} pageSize={pageSize}   currentPage={currentPage}  onPageChange={handlePageChange} />
         </div>
     );
 };
