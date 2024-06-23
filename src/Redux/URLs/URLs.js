@@ -15,3 +15,6 @@ export const POST_CREATE_CART_url = "https://pfback-production-bb33.up.railway.a
 export const GET_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/"; // Traemos los productos del carrito
 export const DELETE_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/delete/"; // Eliminamos el carrito
 export const POST_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/update/"; // Agregamos productos al carrito
+
+export const CREATE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/create";
+export const DELETE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/delete/";

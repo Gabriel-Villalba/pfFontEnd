@@ -8,6 +8,7 @@ import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import LandingPage from "./components/Landing/LandinPage.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Cart from "./components/Cart/Cart.jsx";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx"; 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -139,6 +140,7 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/products/:id" element={<Detail />} /> 
         <Route path="/cart" element={<Cart />} /> 
+        <Route path="/admin" element={<AdminDashboard />} />
         
       </Routes>
       <Footer />

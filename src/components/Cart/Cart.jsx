@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { updateCartQuantity, removeFromCart } from '../../Redux/action/action';
+import {removeFromCart } from '../../Redux/action/action';
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -7,11 +7,11 @@ const Cart = () => {
 
 //console.log('cart', cart)
 
-    const handleQuantityChange = (productId, quantity) => {
-        if (quantity >= 1 && quantity <= 10) {
-            dispatch(updateCartQuantity(productId, quantity));
-        }
-    };
+    // const handleQuantityChange = (productId, quantity) => {
+    //     if (quantity >= 1 && quantity <= 10) {
+    //         dispatch(updateCartQuantity(productId, quantity));
+    //     }
+    // };
 //console.log('productId',productId)
     const handleRemove = (productId) => {
         dispatch(removeFromCart(productId));
@@ -41,13 +41,15 @@ const Cart = () => {
                     <li key={item.product.id} className="cart-item">
                         <span className="item-name">{item.product.Nombre}</span> 
                         <span className="item-price-unit">${parseFloat(item.product.Precio).toFixed(2)}</span>
-                        <input 
+                        <span className="item-quantity">{item.quantity}</span>
+                        
+                        {/* <input 
                             type="number" 
                             value={item.quantity} 
                             onChange={(e) => handleQuantityChange(item.product.id, parseInt(e.target.value))}
                             min="1"
                             className="quantity-input"
-                        />
+                        /> */}
                         
                         <span className="item-total-price">Total: ${(item.product.Precio * item.quantity).toFixed(2)}</span>
                         <button onClick={() => handleRemove(item.product.id)} className="remove-button">X</button>

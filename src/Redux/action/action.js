@@ -7,6 +7,8 @@ import {
   //UPDATE_PRODUCT_url,
   //DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
+  CREATE_CATEGORY_url,
+  DELETE_CATEGORY_url,
   POST_LOGIN_url,
   //POST_NEWUSER_url,
   POST_CREATE_CART_url,
@@ -109,6 +111,30 @@ export function getCategories() {
     }
   };
 }
+//************ crear y borrar categorias ***************/ 
+
+export function postCategory(payload) {
+  return async function () {
+    try {
+      await axios.post(CREATE_CATEGORY_url, { ...payload });
+      alert("Categoría creada con éxito");
+    } catch (error) {
+      alert("¡Ya existe o hubo algún problema durante la creación! Vuelve más tarde");
+    }
+  };
+}
+
+
+export const deleteCategory = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${DELETE_CATEGORY_url}${id}`);
+      dispatch(getCategories());
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error.message);
+    }
+  };
+};
 //***********FILTRO POR CATEGORIAS ****** */
 export function filterByCategories(payload) {
   // console.log(payload);
@@ -179,9 +205,9 @@ export const addToCart = (item) => (dispatch, getState) => {
       ...item,
       product: {
           ...product,
-          Precio: parseFloat(product.Precio) || 0  // Asegurar que Precio sea un número
+          Precio: parseFloat(product.Precio) || 0  
       },
-      quantity: 1  
+      quantity: item.quantity || 1
   };
   dispatch({
       type: "ADD_TO_CART",

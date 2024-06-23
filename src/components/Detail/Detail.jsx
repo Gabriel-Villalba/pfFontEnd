@@ -7,8 +7,9 @@ const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [addedToCart, setAddedToCart] = useState(false); 
+  const [addedToCart, setAddedToCart] = useState(false);
   const cart = useSelector((state) => state.cart);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (cart.some(item => item.product.id === id)) {
@@ -26,7 +27,7 @@ const Detail = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart({ ...product, quantity: 1 }));
+      dispatch(addToCart({ ...product, quantity }));
       setAddedToCart(true);
     }
   };
@@ -57,6 +58,17 @@ const Detail = () => {
                   </ul>
                 </div>
               )}
+                <div className="mt-2">
+                <label htmlFor="quantity" style={{ fontWeight: 'bold' }}>Quantity:</label>
+                <input 
+                  type="number" 
+                  id="quantity" 
+                  value={quantity} 
+                  onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                  min="1"
+                  className="quantity-input"
+                />
+              </div>
               <button
                 className={`btn mt-2 ${addedToCart ? 'btn-added' : 'btn-outline-secondary'}`}
                 onClick={handleAddToCart}
@@ -72,7 +84,7 @@ const Detail = () => {
       ) : (
         <p>Cargando...</p>
       )}
-    
+
     </div>
   );
 };
