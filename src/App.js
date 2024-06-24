@@ -85,7 +85,7 @@ function App() {
                 </div>
             </div>
             {location.pathname !== '/' && <Nav />}
-            {location.pathname !== '/' && location.pathname !== '/form' && location.pathname !== '/home' && (
+            {location.pathname !== '/' && location.pathname !== '/form' && location.pathname !== '/home' && location.pathname !== '/admin' && (
             <div className="container mt-3">
                 <div className="row align-items-center">
                     <div className="col-md-2">

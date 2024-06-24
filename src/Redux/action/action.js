@@ -5,7 +5,7 @@ import {
   GET_PRODUCT_NAME_url,
   CREATE_PRODUCT_url,
   //UPDATE_PRODUCT_url,
-  //DELETE_PRODUCT_url,
+  DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
   CREATE_CATEGORY_url,
   DELETE_CATEGORY_url,
@@ -78,8 +78,8 @@ export function postProduct(payload) {
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`DELETE_PRODUCT_url${id}`);
-      dispatch({ type: "DELETE_PRODUCTS" });
+      await axios.delete(`${DELETE_PRODUCT_url}/${id}`);
+      dispatch(getAllProducts());
     } catch (error) {
       console.error("ACTIONS ERROR");
     }
@@ -128,7 +128,7 @@ export function postCategory(payload) {
 export const deleteCategory = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`${DELETE_CATEGORY_url}${id}`);
+      await axios.delete(`${DELETE_CATEGORY_url}?id=${id}`);
       dispatch(getCategories());
     } catch (error) {
       console.error("Error al eliminar la categoría:", error.message);
@@ -151,7 +151,7 @@ export function orderByPrice(payload) {
   };
 }
  //******ACTUALIZA DATOS DEL FORMULARIO//// */
- export const actualizarDatosFormulario = (payload) => {//*cambie formData por payload
+ export const actualizarDatosFormulario = (payload) => {
   return {
     type: "ACTUALIZARDATOSFORMULARIO",
     payload: payload
@@ -159,7 +159,7 @@ export function orderByPrice(payload) {
 };
 
 
-export const actualizarDatosValidaciones = (payload) => { //* cambie payload por payload
+export const actualizarDatosValidaciones = (payload) => {
   return {
     type: "ACTUALIZARDATOSVALIDACIONES",
     payload: payload
@@ -168,7 +168,7 @@ export const actualizarDatosValidaciones = (payload) => { //* cambie payload por
 
 //***********AUTENTICAR DATOS DE USUARIO********** */
 
-export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en la db y si tiene carrito
+export const login =(Email, Nombre) =>{ 
   
   return async function (dispatch) {
     try {
@@ -222,7 +222,7 @@ export const updateCartQuantity = (productId, quantity) => {
   };
 };
 
-// Acción para eliminar un producto del carrito
+
 export const removeFromCart = (productId) => {
   return {
       type: "REMOVE_FROM_CART",

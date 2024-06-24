@@ -70,7 +70,7 @@ const Detail = () => {
                 />
               </div>
               <button
-                className={`btn mt-2 ${addedToCart ? 'btn-added' : 'btn-outline-secondary'}`}
+                className={`btn-agregarCarrito ${addedToCart ? 'added' : ''}`}
                 onClick={handleAddToCart}
                 disabled={addedToCart}
               >

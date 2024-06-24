@@ -75,7 +75,7 @@ const Products = () => {
                                             ))}
                                         </ul>
                                     </div>
-                                )}<button>BUY</button>
+                                )}<button className='button-style'>BUY</button>
                                 {/* <button
                                     className={`btn mt-2 ${addedToCart[product.id] ? 'btn-added' : 'btn-outline-secondary'}`}
                                     onClick={() => handleAddToCart(product)}
