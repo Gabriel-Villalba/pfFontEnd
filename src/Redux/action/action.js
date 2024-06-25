@@ -2,12 +2,16 @@ import axios from "axios";
 import {
   GET_ALL_PRODUCTS_url,
   GET_PRODUCT_url,
+  GET_PRODUCT_NAME_url,
   CREATE_PRODUCT_url,
   //UPDATE_PRODUCT_url,
   //DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
-  GET_PRODUCT_NAME_url,
-  ADD_TO_CART
+  POST_LOGIN_url,
+  //POST_NEWUSER_url,
+  POST_CREATE_CART_url,
+  GET_USER_url
+
   
 } from "../URLs/URLs.js";
 //*************OBTENER TODOS LOS PRODUCTOS****** */
@@ -151,5 +155,88 @@ export const actualizarDatosValidaciones = (payload) => { //* cambie payload por
     payload: payload
   };
 };
+
+//***********AUTENTICAR DATOS DE USUARIO********** */
+
+export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en la db y si tiene carrito
+  
+  return async function (dispatch) {
+    try {
+     
+      const user = await axios.post(POST_LOGIN_url, {Nombre, Email });
+      //console.log(user.data.cartId)
+      if(user.data.hasCart===false){
+        const newCart= await axios.post(POST_CREATE_CART_url, {UserId:user.data.id});
+       
+      console.log("carrito creado 😊",newCart.data.id) 
+      }
+      const newCart = user.data.cartId ||  newCart.data.id
+      const id = user.data.id
+     // console.log(id)
+      dispatch({
+        type: "LOGIN",
+        payload: [id,newCart]
+      });
+    } catch (error) {
+      console.error("Error al obtener los tipos:", error.message);
+    }
+  };
+}
+////////////////////////////
+
+// export const addToCart = (item) => (dispatch, getState) => {
+//   const state = getState();
+//   const product = state.allProducts.find(p => p.id === item.id);
+//   if (!product) {
+//       console.error("Product not found");
+//       return;
+//   }
+//   const cartItem = {
+//       ...item,
+//       product: {
+//           ...product,
+//           Precio: parseFloat(product.Precio) || 0  // Asegurar que Precio sea un número
+//       },
+//       quantity: 1  
+//   };
+//   dispatch({
+//       type: "ADD_TO_CART",
+//       payload: cartItem
+//   });
+// };  funcion comentada por leo para levantar front
+
+
+export const updateCartQuantity = (productId, quantity) => {
+  return {
+      type: "UPDATE_CART_QUANTITY",
+      payload: { productId, quantity }
+  };
+};
+
+// Acción para eliminar un producto del carrito
+export const removeFromCart = (productId) => {
+  return {
+      type: "REMOVE_FROM_CART",
+      payload: { productId }
+  };
+};
+//**************GET USUARIO****************************** */
+
+export function getUser(Email) {
+  return async function (dispatch) {
+    try {
+      const user = await axios.get(GET_USER_url,{Email});
+      dispatch({
+        type: "GET_USER",
+        payload: user.data
+      });
+    } catch (error) {
+      console.error(error.message);  
+      console.error("Error al obtener user:", error.message);
+    }
+  };
+
+  
+}
 
 

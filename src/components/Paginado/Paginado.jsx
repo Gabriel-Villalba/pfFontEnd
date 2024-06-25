@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Paginado = ({ items, pageSize, currentPage, onPageChange }) => {
     const totalPages = Math.ceil(items.length / pageSize);

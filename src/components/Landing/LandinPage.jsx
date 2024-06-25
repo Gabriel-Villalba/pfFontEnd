@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import LoginButton from '../loginAuht0/LoginButton/loginButton.jsx'
 import LogOutButton from '../loginAuht0/Logout/Logout.jsx'
@@ -22,17 +21,6 @@ const LandingPage = () => {
 
 
     return (
-<<<<<<< HEAD
-        <div className="landing-page">
-            {isAuthenticated ? (
-                    <> 
-                    <Profile/>
-                    <LogOutButton/>
-                    </>) : 
-                    (<LoginButton/>)
-            }
-          
-=======
         <div className="landing-page-container">
             <div className="landing-page">
                 {isAuthenticated ? (
@@ -48,15 +36,10 @@ const LandingPage = () => {
             <div className='Landingspace'></div>
             <div className='Landing2'></div>
             <div className='Landing3'></div>
->>>>>>> e559f822ffff022608649116a68b64d28563e565
 
         </div>
     );
 };
 
 export default LandingPage;
-
-
-
-
 

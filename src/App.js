@@ -16,6 +16,7 @@ import {
   getAllProducts,
   getCategories,
 } from "./Redux/action/action.js";
+import Orders from "./components/Order/Order22.jsx";
 //import { Button } from 'bootstrap';
 
 function App() {
@@ -79,7 +80,7 @@ function App() {
       
             <div className="bg-dark text-white py-2">
                 <div className="container d-flex justify-content-between">
-                    <p className="mb-0">support@email.com</p>
+                    <p className="mb-0">bellamusevip@gmail.com</p>
                     <p className="mb-0">+012-345-6789</p>
                 </div>
             </div>
@@ -138,7 +139,9 @@ function App() {
         <Route path="/products" element={<Products />} /> 
         <Route path="/form" element={<Form />} />
         <Route path="/products/:id" element={<Detail />} /> 
-        <Route path="/cart" element={<Cart />} /> 
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/orden" element={<Orders />} />
+
         
       </Routes>
       <Footer />

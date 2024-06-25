@@ -20,7 +20,7 @@ const Form = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
 
-  const cld = new Cloudinary({ cloud: { cloudName: 'dkftrq1gu' } });
+  const cld = new Cloudinary({ cloud: { cloudName: 'dyxgoxs6m' } });
 
 
   useEffect(() => {
@@ -55,10 +55,10 @@ const Form = () => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'product_images'); 
-
+    formData.append('upload_preset', 'product_images');
+  
     try {
-      const response = await axios.post(`https://api.cloudinary.com/v1_1/dkftrq1gu/image/upload`, formData);
+      const response = await axios.post('https://api.cloudinary.com/v1_1/dyxgoxs6m/image/upload', formData);
       const imageUrl = response.data.secure_url;
       setUploadedImageUrl(imageUrl);
       dispatch(actualizarDatosFormulario({ Imagen_URL: imageUrl }));
@@ -90,9 +90,24 @@ const Form = () => {
       return;
     }
 
+    // Asegurando que Precio y Stock son números
+    const formDataToSend = {
+      ...formData,
+      Precio: parseFloat(formData.Precio.replace(',', '.')),  // Convertir a número
+      Stock: parseInt(formData.Stock, 10),  // Convertir a entero
+    };
+
+    // Verificar si Precio o Stock son NaN después de la conversión
+    if (isNaN(formDataToSend.Precio) || isNaN(formDataToSend.Stock)) {
+      setErrorMessage('Precio o Stock tienen un formato inválido');
+      return;
+    }
+
     try {
-      const response = await axios.post(CREATE_PRODUCT_url, {
-        ...formData
+      const response = await axios.post(CREATE_PRODUCT_url, formDataToSend, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
       if (response.status !== 200) {
         throw new Error('Error al crear producto');
@@ -108,7 +123,6 @@ const Form = () => {
         Imagen_URL: '',
         onOffer: false,
         Brand: '',
-        categoryName: ''
       }));
       setShowValidation({});
     } catch (error) {
@@ -123,12 +137,16 @@ const Form = () => {
       }
       console.error('Error al enviar el formulario:', error);
     }
-  };
+};
 
-  const img = cld.image(uploadedImageUrl)
-  .format('auto')
-  .quality('auto')
-  .resize(auto().gravity(autoGravity()).width(500).height(500));
+
+  const img = uploadedImageUrl 
+  ? cld.image(uploadedImageUrl)
+      .resize(auto().width(500).height(500).gravity(autoGravity()))
+      .format('auto')
+      .quality('auto') 
+  : null;
+
 
 
 
@@ -138,11 +156,7 @@ const Form = () => {
     <h2 className="title">Crear Productos</h2>
     <br />
     <div className='formulario-contenedor'>
-<<<<<<< HEAD
-<div><title>Crear nuevo producto</title></div>
-=======
     
->>>>>>> e559f822ffff022608649116a68b64d28563e565
       
       {successMessage && <p>{successMessage}</p>}
       {!successMessage && <p>{errorMessage}</p>}
@@ -234,7 +248,7 @@ const Form = () => {
           />
           {showValidation.Imagen && validations.Imagen && <p className='Validacion'>{validations.Imagen}</p>}
         </div>
-        {uploadedImageUrl && (
+        {img && (
           <AdvancedImage cldImg={img} />
         )}
         
