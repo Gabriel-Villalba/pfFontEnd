@@ -1,4 +1,5 @@
-import { Link , NavLink} from 'react-router-dom';
+//import { Link , NavLink} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
     return (
@@ -17,9 +18,9 @@ export default function NavBar() {
                     </li>
                 </ul>
             </div>
-            <button className="nav-itemCreate">
+            {/* <button className="nav-itemCreate">
                         <NavLink className="nav-linkCreate" to="/form">CREATE PRODUCT</NavLink>
-            </button>
+            </button> */}
         </nav>
     );
 }

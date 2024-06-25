@@ -26,9 +26,11 @@ const initialState = {
       onOffer: false,
       Brand: '',
   },
-  users:"",
-  cart:"",
-  productCart:[]
+   userAdmin:"",
+   users:"",
+   idCarrito:"",
+   cart:"",
+  // productCart:[]
   };
   
   export default function rootReducer(state = initialState, action) {
@@ -57,7 +59,17 @@ const initialState = {
           return state;
         
       case "DELETE_PRODUCTS":
-        return state; 
+         // case "AgregarAlCarrito"://ADD_PRODUCT_TO_CART
+            
+               //console.log(action.payload)
+                 return {
+                   ...state,
+                  cart: action.payload ,
+
+                 }
+
+
+        //return state; 
        
       case "UPDATEPRODUCT":
         return state;   
@@ -124,13 +136,45 @@ const initialState = {
           }
         };
       case "LOGIN": 
-      console.log(action.payload[0])
-      console.log(action.payload[1])
+      //console.log(action.payload[0])
+      console.log(action.payload[2])
       return{
         ...state,
-        users: action.payload[0],
-        cart : action.payload[1]
+        users: action.payload[0],//*id usuario
+        idCarrito : action.payload[1],//* id carrito 
+        userAdmin:action.payload[2]//* es administrador
       }
+    case "LOGIN_ADMIN":
+       return {
+        ...state,
+        userAdmin: action.payload //* userAdmin true
+       }
+      case "ADD_TO_CART":
+        return {
+            ...state,
+            cart: [...state.cart, action.payload]
+        };
+        case "UPDATE_CART_QUANTITY":
+          return {
+              ...state,
+              cart: state.cart.map(item => 
+                  item.product.id === action.payload.productId 
+                      ? { ...item, quantity: action.payload.quantity }
+                      : item
+              )
+          };
+
+      case "REMOVE_FROM_CART":
+          return {
+              ...state,
+              cart: state.cart.filter(item => item.product.id !== action.payload.productId)
+          };
+          case "DELETE_ONE_PRODUCTS"://* borrando solo UNproducto del carrito
+            return {
+                ...state,
+                cart:action.payload
+            };
+
       default:
         //console.log("pasando por nada");
         return state;
