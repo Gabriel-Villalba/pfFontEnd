@@ -28,13 +28,13 @@ const Cart = () => {
 //console.log('totalPrice', totalPrice)
     return (
         <div className="cart-container">
-            <h1 className="cart-title">Carrito de Compras</h1>
+            <h1 className="cart-title">Shopping</h1>
             <div className="cart-header">
-                <span className="header-item">Producto</span>
-                <span className="header-item">Precio</span>
-                <span className="header-item">Cantidad</span>
+                <span className="header-item">Product</span>
+                <span className="header-item">Price</span>
+                <span className="header-item">Quantity</span>
                 <span className="header-item">Total</span>
-                <span className="header-item">Eliminar</span>
+                <span className="header-item">Remove</span>
             </div>
             <ul className="cart-list"                               >
                 {cart.map(item => (
@@ -51,14 +51,14 @@ const Cart = () => {
                             className="quantity-input"
                         /> */}
                         
-                        <span className="item-total-price">Total: ${(item.product.Precio * item.quantity).toFixed(2)}</span>
-                        <button onClick={() => handleRemove(item.product.id)} className="remove-button">X</button>
+                        <span className="item-total-price"> ${(item.product.Precio * item.quantity).toFixed(2)}</span>
+                        <button onClick={() => handleRemove(item.product.id)} className="remove-button">Take off</button>
                     </li>
                 ))}
                 
             </ul>
             <h2 className="total-price">${totalPrice.toFixed(2)}</h2>
-            <button onClick={handlePurchase} className="purchase-button">Comprar</button>
+            <button onClick={handlePurchase} className="purchase-button">BUY ALL</button>
         </div>
     );
 };

@@ -27,7 +27,7 @@ const SearchBar = () => {
         onKeyDown={handleKeyDown} 
       />
       <button type="button" onClick={() => name ? dispatch(getProductsByName(name)):alert("El campo está vacío")}>
-        Buscar
+        Search
       </button>
     </div>
   );

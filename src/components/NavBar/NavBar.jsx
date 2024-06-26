@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LogoutButton from '../loginAuht0/Logout/Logout';
 export default function NavBar() {
+
+    const isAdmin = useSelector(state => state.userAdmin); 
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#FF6F61' }}>
             
@@ -15,9 +18,12 @@ export default function NavBar() {
                     <li className="nav-item">
                         <Link className="nav-link" to="/products">PRODUCTS</Link>
                     </li>
+                    {isAdmin && (
                     <li className="nav-item">
                         <Link className="nav-link" to="/admin">ADMIN</Link>
                     </li>
+
+                    )}
                     <div className='botonLogOut'>  <LogoutButton/></div>
                 
             

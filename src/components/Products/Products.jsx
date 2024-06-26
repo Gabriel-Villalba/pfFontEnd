@@ -68,7 +68,7 @@ const Products = () => {
 
                                 {product.Categories && product.Categories.length > 0 && (
                                     <div>
-                                        <h6>Categorías:</h6>
+                                        <h6>Categories:</h6>
                                         <ul className="list-unstyled">
                                             {product.Categories.map((category, index) => (
                                                 <li key={index}>{category.name}</li>
