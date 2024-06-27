@@ -24,21 +24,3 @@ export default HomePage;
 
 
 
-// const HomePage = () => {
-//     const { isAuthenticated, user } = useAuth0();
-//     let email = ""
-//     isAuthenticated? email = user.email: email = null;
- 
-//   return (
-//     <div className="homePage">
-//       {email === "gabrielwaltervillalba@gmail.com" && ( // Corrige la condición
-//         <Routes>
-//           <Route path="/admin" element={<AdminDashboard />} />
-//         </Routes>
-//       )}
-//       <img src={homeImage} alt="Background" className="backgroundImage" />
-//     </div>
-//   );
-// };
-
-// export default HomePage;

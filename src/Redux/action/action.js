@@ -7,8 +7,8 @@ import {
   //UPDATE_PRODUCT_url,
   //DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
-  CREATE_CATEGORY_url,
-  DELETE_CATEGORY_url,
+  CREATE_CATEGORIA_url,
+  DELETE_CATEGORIA_url,
   POST_LOGIN_url,
   //POST_NEWUSER_url,
   POST_CREATE_CART_url,
@@ -81,7 +81,7 @@ export function postProduct(payload) {
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`DELETE_PRODUCT_url${id}`);
+      await axios.delete(`DELETE_PRODUCT_url/${id}`);
       dispatch({ type: "DELETE_PRODUCTS" });
     } catch (error) {
       console.error("ACTIONS ERROR");
@@ -118,7 +118,7 @@ export function getCategories() {
 export function postCategory(payload) {
   return async function () {
     try {
-      await axios.post(CREATE_CATEGORY_url, { ...payload });
+      await axios.post(CREATE_CATEGORIA_url, { ...payload });
       alert("Categoría creada con éxito");
     } catch (error) {
       alert("¡Ya existe o hubo algún problema durante la creación! Vuelve más tarde");
@@ -128,9 +128,10 @@ export function postCategory(payload) {
 
 
 export const deleteCategory = (id) => {
+  console.log(id)
   return async (dispatch) => {
     try {
-      await axios.delete(`${DELETE_CATEGORY_url}${id}`);
+      await axios.delete(`${DELETE_CATEGORIA_url}${id}`);
       dispatch(getCategories());
     } catch (error) {
       console.error("Error al eliminar la categoría:", error.message);
@@ -175,7 +176,7 @@ export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en l
   return async function (dispatch) {
     try {
       const user = await axios.post(POST_LOGIN_url, { Nombre, Email });
-      console.log(user.data)
+      //console.log(user.data)
      if(user.data.userAdmin === true){
         console.log("Llego el administrador")
         dispatch({type : "LOGIN_ADMIN", payload: user.data.userAdmin})//* si es admin, solo despachamos admin "true"
@@ -186,15 +187,16 @@ export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en l
         });
         console.log("carrito creado 😊", newCart.data.id);
       }
-      //const idCart =user.data.cartId
+     
            //*traemos los productos que tiene este usuarioen su carrito
-     // const productInCart = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+          
       const newCart = user.data.cartId || newCart.data.id;
+      const idCart = newCart
+      const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`); 
       const id = user.data.id;
-     //console.log(user.data.userAdmin)
       dispatch({
         type: "LOGIN",
-        payload: [id, newCart],
+        payload: [id, newCart, agregar.data],
       });
      }    
     } catch (error) {
@@ -202,21 +204,35 @@ export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en l
     }
   };
 }
+//***************obtener todo el carrito************************* */
+export function getProductIntoCart(idCart) {
+  return async function (dispatch) {
+    const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+    dispatch({
+      type: "GET_PRODUCT=INTO=CART",
+      payload: agregar.data,
+      });
+  }
+}
 
 //****************AGREGAR AL CARRITO************************** */
 export function agregarAlCarrito(id_products,quantity, idCart ) {
   return async function (dispatch) {
     try {
-      //console.log(idCart)
-      await axios.post(POST_ADD_PRODUCT_TO_CART_url, {
+     const pepe = await axios.post(POST_ADD_PRODUCT_TO_CART_url, {
         id_products, quantity, idCart
         });
+       if(pepe.data.message){
+        alert(pepe.data.message);
+       }else{
+        alert("El producto se agrego con exito al carrito");
         const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
-        //console.log(agregar.data)
         dispatch({
           type: "DELETE_PRODUCTS",
           payload: agregar.data,
           });
+       }
+      
     } catch (error) {
       console.error("Error al agregar al carrito:", error.message);
       }
@@ -227,7 +243,9 @@ export function borrarProductoDelCarrito(id, idCart) {
   return async function (dispatch) {
     try {
       await axios.delete(`${DELETE_ONE_PRODUCT_INTO_CART_url}${id}`);
+     // console.log("Aca esta el error")
       const eliminar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+      //console.log(eliminar)
       dispatch({
         type: "DELETE_ONE_PRODUCTS",
         payload: eliminar.data,

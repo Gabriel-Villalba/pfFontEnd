@@ -8,22 +8,13 @@ const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [addedToCart, setAddedToCart] = useState(false);
-  //const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
   const [quantity, setQuantity] = useState(1);
 
-  const usuario = useSelector((state) => state.users)
+  //const usuario = useSelector((state) => state.users)
   const idCart = useSelector((state) => state.idCarrito);
-     console.log("carrito ",idCart)
-     console.log("usuario ",usuario)
-
-
-  // useEffect(() => {
-  //   console.log(cart)
-  //   if (cart.some(item => item.product.id === id )) {
-      
-  //     setAddedToCart(true);
-  //   }
-  // }, [cart, id]);
+    // console.log("carrito ",idCart)
+     //console.log("usuario ",usuario)
 
   useEffect(() => {
     dispatch(getProductsById(id));
@@ -32,18 +23,39 @@ const Detail = () => {
   const handleClickClose = () => {
     navigate('/products');
   };
-
-  const handleAddToCart = () => {
-    if (product) {
-      const id_products = product.id
-      dispatch(agregarAlCarrito(id_products,quantity, idCart)) //product.id, amount, miCart
-      //dispatch(addToCart({ ...product, quantity }));
+  useEffect(() => {
+    if (cart.some(item => item.id === id)) {
       setAddedToCart(true);
     }
-  };
+  }, [cart, id]);
+  
+  const handleAddToCart = () => {
+  if (product) {
+    const nombreProduct = product.Nombre
+    const id_products = product.id;
+    const productInCart = cart.filter((item) => {
+      if (item.Nombre === nombreProduct) {
+        return true;
+      }
+      return false;
+    });
+    //console.log(productInCart)
+    if (productInCart===nombreProduct) {
+      // El producto ya está en el carrito
+      console.log('El producto ya existe en el carrito');
+    } else {
+      // Agrega el producto al carrito
+      idCart ? dispatch(agregarAlCarrito(id_products, quantity, idCart)) : console.log("no hay id ")
+      setAddedToCart(true);
+      
+    }
+  }
+};
+
+  
 
   const product = useSelector((state) => state.detail);
-
+  //console.log(product.Nombre)
   return (
     <div className="container mt-5">
       <h1 className="mb-4">Product Detail</h1>
@@ -80,7 +92,7 @@ const Detail = () => {
                 />
               </div>
               <button
-                className={`btn mt-2 ${addedToCart ? 'btn-added' : 'btn-outline-secondary'}`}
+                 className={`btn-agregarCarrito ${addedToCart ? 'added' : ''}`}
                 onClick={handleAddToCart}
                 disabled={addedToCart}
               >

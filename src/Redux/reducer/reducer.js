@@ -29,7 +29,7 @@ const initialState = {
    userAdmin:"",
    users:"",
    idCarrito:"",
-   cart:"",
+   cart:[],
   // productCart:[]
   };
   
@@ -43,8 +43,6 @@ const initialState = {
         };
 
       case "GET_PRODUCT_BY_NAME":
-              // const product= state.allProducts.filter((nombre) =>
-              //     nombre.Nombre?.includes(action.payload))
               return {
                 ...state,
               allProducts: action.payload
@@ -59,17 +57,11 @@ const initialState = {
           return state;
         
       case "DELETE_PRODUCTS":
-         // case "AgregarAlCarrito"://ADD_PRODUCT_TO_CART
-            
-               //console.log(action.payload)
                  return {
                    ...state,
                   cart: action.payload ,
 
                  }
-
-
-        //return state; 
        
       case "UPDATEPRODUCT":
         return state;   
@@ -94,7 +86,6 @@ const initialState = {
           return {
             ...state,
             alert: "No se encontraron productos en la categoría especificada",
-            //
           };
         }
         return {
@@ -136,13 +127,12 @@ const initialState = {
           }
         };
       case "LOGIN": 
-      //console.log(action.payload[0])
-      console.log(action.payload[2])
       return{
         ...state,
         users: action.payload[0],//*id usuario
         idCarrito : action.payload[1],//* id carrito 
-        userAdmin:action.payload[2]//* es administrador
+        cart: action.payload[2]
+       // userAdmin:action.payload[2]//* es administrador
       }
     case "LOGIN_ADMIN":
        return {
@@ -175,8 +165,15 @@ const initialState = {
                 cart:action.payload
             };
 
+      case "GET_PRODUCT_INTO_CART":{
+        console.log(action.payload)
+        return{
+      ...state,
+      cart : action.paiload
+      };
+    }
       default:
-        //console.log("pasando por nada");
+        
         return state;
     }
   }

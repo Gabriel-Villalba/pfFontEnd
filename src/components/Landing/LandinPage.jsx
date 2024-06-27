@@ -12,7 +12,7 @@ const LandingPage = () => {
   const { isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
   const isAdmin = useSelector((state) => state.userAdmin);
-  console.log(isAdmin);
+ console.log(isAdmin);
   useEffect(() => {
     if (isAuthenticated) {
       //const email = user.email

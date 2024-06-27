@@ -9,6 +9,7 @@ import LandingPage from "./components/Landing/LandinPage.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx"; 
+import Orders from "./components/Order/Order22.jsx"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -66,26 +67,29 @@ function App() {
     setSortOrder(e.target.value)
 
   }
-  // const setSortOrder = (event) => {
-  //   dispatch(orderByPrice(event.target.value));
-  // };
-
-
+ 
   const handleCartClick = () => {
+    
     navigate('/cart');
 };
+const shouldShowSearchAndFilters =
+    location.pathname !== "/" &&
+    location.pathname !== "/form" &&
+    location.pathname !== "/home" &&
+    location.pathname !== "/admin" &&
+    location.pathname !== "/cart" &&
+    location.pathname !== "/orden";
 
   return (
     <div>
-      
-            <div className="bg-dark text-white py-2">
-                <div className="container d-flex justify-content-between">
-                    <p className="mb-0">bellamusevip@gmail.com</p>
-                    <p className="mb-0">+012-345-6789</p>
-                </div>
-            </div>
-            {location.pathname !== '/' && <Nav />}
-            {location.pathname !== '/' && location.pathname !== '/form' && location.pathname !== '/home' && (
+      <div className="bg-dark text-white py-2">
+        <div className="container d-flex justify-content-between">
+          <p className="mb-0">bellamusevip@gmail.com</p>
+          <p className="mb-0">+012-345-6789</p>
+        </div>
+      </div>
+      {location.pathname !== "/" && <Nav />}
+      {shouldShowSearchAndFilters && (
             <div className="container mt-3">
                 <div className="row align-items-center">
                     <div className="col-md-2">
@@ -140,7 +144,8 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/products/:id" element={<Detail />} /> 
         <Route path="/cart" element={<Cart />} /> 
-        <Route path="/admin" element={<AdminDashboard />} /> 
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/orden" element={<Orders/>} /> 
         
       </Routes>
       <Footer />

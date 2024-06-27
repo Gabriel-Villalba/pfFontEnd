@@ -12,14 +12,21 @@
 
 // export const POST_CREATE_CART_url = "https://pfback-production-bb33.up.railway.app/cart/create";
 
-// export const GET_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/"; // Traemos los productos del carrito
-// export const DELETE_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/delete/"; // Eliminamos el carrito
+// //export const GET_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/"; // Traemos los productos del carrito
+// //export const DELETE_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/delete/"; // Eliminamos el carrito
 // export const POST_CART_PRODUCT_url = "https://pfback-production-bb33.up.railway.app/cart/update/"; // Agregamos productos al carrito
 
-// export const CREATE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/create";
-// export const DELETE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/delete/";
+// //export const CREATE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/create";
+// //export const DELETE_CATEGORY_url = "https://pfback-production-bb33.up.railway.app/category/delete/";
+// export const GET_CART_PRODUCT_url = "http://pfback-production-bb33.up.railway.app/cart/"; //*traemos los productos del carrito
+// export const DELETE_CART_PRODUCT_url = "http://pfback-production-bb33.up.railway.app/cart/delete/"; //*mas ${idCart} eliminamos el carrito
+// export const POST_ADD_PRODUCT_TO_CART_url = "http://pfback-production-bb33.up.railway.app/productCart/addProduct/"; //*a
+// export const GET_PRODUCT_INTO_CART_url = "http://pfback-production-bb33.up.railway.app/productCart/getAllProducts/"//* 
+// export const DELETE_ONE_PRODUCT_INTO_CART_url = "http://pfback-production-bb33.up.railway.app/productCart/deleteOneProducts/" //* BORRAR UN PRODUCTO DEL CARRITO
 
-
+// // export const CREATE_CATEGORY_url = "http://pfback-production-bb33.up.railway.app/productCart/getAllProducts/"//*
+// export const DELETE_CATEGORY_url = "http://pfback-production-bb33.up.railway.app/productCart/getAllProducts/"//*  
+ 
 
 
 export const GET_ALL_PRODUCTS_url = "http://localhost:3001/products/"
@@ -45,8 +52,8 @@ export const POST_ADD_PRODUCT_TO_CART_url = "http://localhost:3001/productCart/a
 export const GET_PRODUCT_INTO_CART_url = "http://localhost:3001/productCart/getAllProducts/"//* 
 export const DELETE_ONE_PRODUCT_INTO_CART_url = "http://localhost:3001/productCart/deleteOneProducts/" //* BORRAR UN PRODUCTO DEL CARRITO
 
-export const CREATE_CATEGORY_url = "http://localhost:3001/productCart/getAllProducts/"//*
-export const DELETE_CATEGORY_url = "http://localhost:3001/productCart/getAllProducts/"//*  
+//export const CREATE_CATEGORY_url = "http://localhost:3001/productCart/getAllProducts/"//*
+//export const DELETE_CATEGORY_url = "http://localhost:3001/productCart/getAllProducts/"//*  
 
 //************Url Mercado Pago *************/
 export const CREATE_PREFERENCE_Url = "http://localhost:3001/mp/createPreference "

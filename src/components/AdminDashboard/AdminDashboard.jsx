@@ -1,41 +1,56 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import ProductsAdmin from './ProductsAdmin/ProductsAdmin.jsx'
+import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
+import DeleteProducts from './ProductsAdmin/DeleteProducts.jsx'
 import CategoriesAdmin from './CategoriesAdmin/CategoriesAdmin.jsx';
-import { getAllProducts, getCategories } from "../../Redux/action/action";
+import DeleteCategories from './DeleteCategories/DeleteCategories.jsx'
+import Form from '../Form/Form.jsx'; 
+
+
 
 const AdminDashboard = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllProducts());
-    dispatch(getCategories());
-  }, [dispatch]);
-
   return (
-    <Container>
-      <h1 className="my-4">Admin Dashboard</h1>
-      <Row>
-        <Col md={6}>
-          <Card className="mb-4">
-            <Card.Header>Productos</Card.Header>
-            <Card.Body>
-              <ProductsAdmin />
-            </Card.Body>
-          </Card>
+    <div> 
+    <div  className='panelAdmin'> <h2 className="title">Admin</h2></div> 
+    <br />
+    <Container className="adminContainer">
+    <Tab.Container defaultActiveKey="createProduct">
+      <Row className="my-4">
+        <Col sm={3}>
+          <Nav variant="pills" className="columnAdmin">
+            <Nav.Item>
+              <Nav.Link className="itemcolum"  eventKey="createProduct">Create Products</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className="itemcolum"  eventKey="deleteProducts">Delete Products</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className="itemcolum"  eventKey="createCategory">Create Categories</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link  className="itemcolum" eventKey="deleteCategories">Delete Categories</Nav.Link>
+            </Nav.Item>
+          </Nav>
         </Col>
-        <Col md={6}>
-          <Card className="mb-4">
-            <Card.Header>Categorías</Card.Header>
-            <Card.Body>
+        <Col sm={9}>
+          <Tab.Content className="admin2">
+            <Tab.Pane eventKey="createProduct">
+              <Form />
+            </Tab.Pane>
+            <Tab.Pane eventKey="deleteProducts">
+              <DeleteProducts />
+            </Tab.Pane>
+            <Tab.Pane eventKey="createCategory">
               <CategoriesAdmin />
-            </Card.Body>
-          </Card>
+            </Tab.Pane>
+            <Tab.Pane eventKey="deleteCategories">
+              <DeleteCategories />
+            </Tab.Pane>
+          </Tab.Content>
         </Col>
       </Row>
-    </Container>
-  );
+    </Tab.Container>
+  </Container>
+  </div>
+);
 };
 
 export default AdminDashboard;
