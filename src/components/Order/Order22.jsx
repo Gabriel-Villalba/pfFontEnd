@@ -64,8 +64,9 @@ function Orders () {
             <span> Total a pagar: {totalPrice} USD  </span>
            </div>
         </div>
-        <button onClick={generatePDF}>PDF</button>
-        <button >Pagar</button>
+        
+        <button className='btn btn-warning' onClick={generatePDF}>PDF</button> 
+        <button className='btn btn-warning'  >Pagar</button>
     
     </div>
   );
