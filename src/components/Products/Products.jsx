@@ -2,32 +2,19 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Paginado from '../Paginado/Paginado.jsx';
 import { Link } from 'react-router-dom';
-import { getAllProducts, addToCart } from "../../Redux/action/action";
-
+import { getAllProducts } from "../../Redux/action/action";
+// import { Button } from 'bootstrap';
 const Products = () => {
     const dispatch = useDispatch(); 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(6);
-    const [addedToCart, setAddedToCart] = useState({}); 
-
-
+    // const [addedToCart, setAddedToCart] = useState({}); 
     useEffect(() => {
         dispatch(getAllProducts()); 
     }, [dispatch]);     
 
     const products = useSelector((state) => state.allProducts);
-    const cart = useSelector((state) => state.cart);
-
-    useEffect(() => {
-        const addedItems = {};
-        cart.forEach(item => {
-            console.log(item)
-            addedItems[item.id] = true;
-        });
-        setAddedToCart(addedItems);
-    }, [cart]);
-
-
+    
     useEffect(() => {
         setCurrentPage(1);
     }, [products]); 
@@ -41,17 +28,8 @@ const Products = () => {
         return products.slice(startIndex, startIndex + pageSize);
     };
   //console.log('startIndex',startIndex)
-  
-  
-    const currentProducts = getCurrentPageItems();
 
-    //console.log('currentProducts',currentProducts)
-    const handleAddToCart = (product) => {
-        dispatch(addToCart({ ...product, quantity: 1 }));
-        setAddedToCart({ ...addedToCart, [product.id]: true }); 
-    };
-
-
+    const currentProducts = getCurrentPageItems(); 
     return (
         <div className="container mt-5">
             <h1 className="mb-4">PRODUCTS</h1>
@@ -75,14 +53,8 @@ const Products = () => {
                                             ))}
                                         </ul>
                                     </div>
-                                )}
-                                <button
-                                    className={`btn mt-2 ${addedToCart[product.id] ? 'btn-added' : 'btn-outline-secondary'}`}
-                                    onClick={() => handleAddToCart(product)}
-                                    disabled={addedToCart[product.id]}>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    {addedToCart[product.id] ? 'En el carrito' : 'Agregar al carrito'}
-                                </button>
+                                )}<button className='button-style'>BUY</button>
+                        
                             </div>
                         </div>
                     </div>

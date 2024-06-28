@@ -26,8 +26,10 @@ const initialState = {
       onOffer: false,
       Brand: '',
   },
-  // users:"",
-  cart:[],
+   userAdmin:"",
+   users:"",
+   idCarrito:"",
+   cart:[],
   // productCart:[]
   };
   
@@ -41,8 +43,6 @@ const initialState = {
         };
 
       case "GET_PRODUCT_BY_NAME":
-              // const product= state.allProducts.filter((nombre) =>
-              //     nombre.Nombre?.includes(action.payload))
               return {
                 ...state,
               allProducts: action.payload
@@ -58,7 +58,11 @@ const initialState = {
           return state;
         
       case "DELETE_PRODUCTS":
-        return state; 
+                 return {
+                   ...state,
+                  cart: action.payload ,
+
+                 }
        
       case "UPDATEPRODUCT":
         return state;   
@@ -83,7 +87,6 @@ const initialState = {
           return {
             ...state,
             alert: "No se encontraron productos en la categoría especificada",
-            //
           };
         }
         return {
@@ -125,13 +128,18 @@ const initialState = {
           }
         };
       case "LOGIN": 
-      console.log(action.payload[0])
-      console.log(action.payload[1])
       return{
         ...state,
-        users: action.payload[0],
-        cart : action.payload[1]
+        users: action.payload[0],//*id usuario
+        idCarrito : action.payload[1],//* id carrito 
+        cart: action.payload[2]
+       // userAdmin:action.payload[2]//* es administrador
       }
+    case "LOGIN_ADMIN":
+       return {
+        ...state,
+        userAdmin: action.payload //* userAdmin true
+       }
       case "ADD_TO_CART":
         return {
             ...state,
@@ -150,11 +158,23 @@ const initialState = {
       case "REMOVE_FROM_CART":
           return {
               ...state,
-              cart: state.cart.filter(item => item.id !== action.payload.productId)
+              cart: state.cart.filter(item => item.product.id !== action.payload.productId)
           };
+          case "DELETE_ONE_PRODUCTS"://* borrando solo UNproducto del carrito
+            return {
+                ...state,
+                cart:action.payload
+            };
 
+      case "GET_PRODUCT_INTO_CART":{
+        console.log(action.payload)
+        return{
+      ...state,
+      cart : action.paiload
+      };
+    }
       default:
-        //console.log("pasando por nada");
+        
         return state;
     }
   }

@@ -7,10 +7,15 @@ import {
   //UPDATE_PRODUCT_url,
   //DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
+  CREATE_CATEGORIA_url,
+  DELETE_CATEGORIA_url,
   POST_LOGIN_url,
   //POST_NEWUSER_url,
   POST_CREATE_CART_url,
-  GET_USER_url
+  GET_USER_url,
+  GET_PRODUCT_INTO_CART_url,
+  POST_ADD_PRODUCT_TO_CART_url,
+  DELETE_ONE_PRODUCT_INTO_CART_url
 
   
 } from "../URLs/URLs.js";
@@ -76,29 +81,13 @@ export function postProduct(payload) {
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`DELETE_PRODUCT_url${id}`);
+      await axios.delete(`DELETE_PRODUCT_url/${id}`);
       dispatch({ type: "DELETE_PRODUCTS" });
     } catch (error) {
       console.error("ACTIONS ERROR");
     }
   };
 };
-
-
-export const addToCart = (item) => (dispatch, getState) => {
-  const state = getState();
-  const product = state.allProducts.find(p => p.id === item.productId);
-  const cartItem = {
-      ...item,
-      product
-  };
-  dispatch({
-      type: "ADD_TO_CART",
-      payload: cartItem
-  });
-};
-
-
  //********ACTUALIZAR PRODUCTO ***** */
 //  export const updateProducts = (id) => {
 //   return {
@@ -119,12 +108,36 @@ export function getCategories() {
       });
     } catch (error) {
       console.error(error.message);
-      //console.error(error.respon); // Estado de la respuesta
-     // console.error(error.response.headers); // Encabezados de la respuesta
+    
       console.error("Error al obtener los tipos:", error.message);
     }
   };
 }
+//************ crear y borrar categorias ***************/ 
+
+export function postCategory(payload) {
+  return async function () {
+    try {
+      await axios.post(CREATE_CATEGORIA_url, { ...payload });
+      alert("Categoría creada con éxito");
+    } catch (error) {
+      alert("¡Ya existe o hubo algún problema durante la creación! Vuelve más tarde");
+    }
+  };
+}
+
+
+export const deleteCategory = (id) => {
+  console.log(id)
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${DELETE_CATEGORIA_url}${id}`);
+      dispatch(getCategories());
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error.message);
+    }
+  };
+};
 //***********FILTRO POR CATEGORIAS ****** */
 export function filterByCategories(payload) {
   // console.log(payload);
@@ -162,49 +175,109 @@ export const login =(Email, Nombre) =>{ //*verificamos si el usuario existe en l
   
   return async function (dispatch) {
     try {
-     
-      const user = await axios.post(POST_LOGIN_url, {Nombre, Email });
-      //console.log(user.data.cartId)
-      if(user.data.hasCart===false){
-        const newCart= await axios.post(POST_CREATE_CART_url, {UserId:user.data.id});
-       
-      console.log("carrito creado 😊",newCart.data.id) 
+      const user = await axios.post(POST_LOGIN_url, { Nombre, Email });
+      //console.log(user.data)
+     if(user.data.userAdmin === true){
+        console.log("Llego el administrador")
+        dispatch({type : "LOGIN_ADMIN", payload: user.data.userAdmin})//* si es admin, solo despachamos admin "true"
+     }else {
+      if (user.data.hasCart === false) {//*no tiene carrito
+        const newCart = await axios.post(POST_CREATE_CART_url, {
+          UserId: user.data.id,
+        });
+        console.log("carrito creado 😊", newCart.data.id);
       }
-      const newCart = user.data.cartId ||  newCart.data.id
-      const id = user.data.id
-     // console.log(id)
+     
+           //*traemos los productos que tiene este usuarioen su carrito
+          
+      const newCart = user.data.cartId || newCart.data.id;
+      const idCart = newCart
+      const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`); 
+      const id = user.data.id;
       dispatch({
         type: "LOGIN",
-        payload: [id,newCart]
+        payload: [id, newCart, agregar.data],
       });
+     }    
     } catch (error) {
-      console.error("Error al obtener los tipos:", error.message);
+      console.error("Error ", error.message);
     }
   };
 }
+//***************obtener todo el carrito************************* */
+export function getProductIntoCart(idCart) {
+  return async function (dispatch) {
+    const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+    dispatch({
+      type: "GET_PRODUCT=INTO=CART",
+      payload: agregar.data,
+      });
+  }
+}
+
+//****************AGREGAR AL CARRITO************************** */
+export function agregarAlCarrito(id_products,quantity, idCart ) {
+  return async function (dispatch) {
+    try {
+     const pepe = await axios.post(POST_ADD_PRODUCT_TO_CART_url, {
+        id_products, quantity, idCart
+        });
+       if(pepe.data.message){
+        alert(pepe.data.message);
+       }else{
+        alert("El producto se agrego con exito al carrito");
+        const agregar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+        dispatch({
+          type: "DELETE_PRODUCTS",
+          payload: agregar.data,
+          });
+       }
+      
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error.message);
+      }
+      };
+}
+//**********************BORRAR UN PRODUCTO DEL CARRITO********************************* */
+export function borrarProductoDelCarrito(id, idCart) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`${DELETE_ONE_PRODUCT_INTO_CART_url}${id}`);
+     // console.log("Aca esta el error")
+      const eliminar = await axios.get(`${GET_PRODUCT_INTO_CART_url}${idCart}`);
+      //console.log(eliminar)
+      dispatch({
+        type: "DELETE_ONE_PRODUCTS",
+        payload: eliminar.data,
+        });
+        } catch (error) {
+          console.error("Error al eliminar del carrito:", error.message);
+        }
+      };
+}
+
 ////////////////////////////
 
-// export const addToCart = (item) => (dispatch, getState) => {
-//   const state = getState();
-//   const product = state.allProducts.find(p => p.id === item.id);
-//   if (!product) {
-//       console.error("Product not found");
-//       return;
-//   }
-//   const cartItem = {
-//       ...item,
-//       product: {
-//           ...product,
-//           Precio: parseFloat(product.Precio) || 0  // Asegurar que Precio sea un número
-//       },
-//       quantity: 1  
-//   };
-//   dispatch({
-//       type: "ADD_TO_CART",
-//       payload: cartItem
-//   });
-// };  funcion comentada por leo para levantar front
-
+export const addToCart = (item) => (dispatch, getState) => {
+  const state = getState();
+  const product = state.allProducts.find(p => p.id === item.id);
+  if (!product) {
+      console.error("Product not found");
+      return;
+  }
+  const cartItem = {
+      ...item,
+      product: {
+          ...product,
+          Precio: parseFloat(product.Precio) || 0  
+      },
+      quantity: item.quantity || 1
+  };
+  dispatch({
+      type: "ADD_TO_CART",
+      payload: cartItem
+  });
+};
 
 export const updateCartQuantity = (productId, quantity) => {
   return {
@@ -238,5 +311,3 @@ export function getUser(Email) {
 
   
 }
-
-

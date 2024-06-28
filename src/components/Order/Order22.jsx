@@ -1,5 +1,5 @@
 import  {useRef} from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { Table } from 'react-bootstrap';
 import {useReactToPrint} from "react-to-print"
 
@@ -13,7 +13,7 @@ function Orders () {
   const componentPDF= useRef()
   const actions = useSelector(state => state.cart);
   console.log(actions)
-
+ 
   const generatePDF = useReactToPrint({
     content: ()=>componentPDF.current,
     documentTitle: "Factura BellaMuse",
@@ -28,7 +28,10 @@ function Orders () {
   //  const handlePurchase = () => {
   //       alert('Pasarela de pagos del Sr Gabriel');
   //   };
-
+  const totalPrice = actions.length > 0 && actions.reduce((total, item) => {
+    const price = parseFloat(item.Precio) || 0;
+     return total + price * item.amount;
+ }, 0);
 
   return (
     <div className='container'>
@@ -50,15 +53,15 @@ function Orders () {
                   <tr key={action.id}>
                     <td>{action.Nombre}</td>
                     <td>{action.Precio}</td>
-                    <td>{action.quantity}</td>
-                    <td>{action.total}</td>
+                    <td>{action.amount}</td>
+                    <td>{ action.Precio * action.amount  }</td>
                   </tr>
                 ))}
                 
               </tbody>
               
             </Table>
-            <span> Total a pagar: {summary} USD  </span>
+            <span> Total a pagar: {totalPrice} USD  </span>
            </div>
         </div>
         <button onClick={generatePDF}>PDF</button>

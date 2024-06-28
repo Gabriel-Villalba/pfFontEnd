@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductsById, addToCart } from "../../Redux/action/action";
+import { getProductsById, agregarAlCarrito } from "../../Redux/action/action";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [addedToCart, setAddedToCart] = useState(false); 
+  const [addedToCart, setAddedToCart] = useState(false);
   const cart = useSelector((state) => state.cart);
+  const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    if (cart.some(item => item.product.id === id)) {
-      setAddedToCart(true);
-    }
-  }, [cart, id]);
+  //const usuario = useSelector((state) => state.users)
+  const idCart = useSelector((state) => state.idCarrito);
+    // console.log("carrito ",idCart)
+     //console.log("usuario ",usuario)
 
   useEffect(() => {
     dispatch(getProductsById(id));
@@ -23,16 +23,39 @@ const Detail = () => {
   const handleClickClose = () => {
     navigate('/products');
   };
-
-  const handleAddToCart = () => {
-    if (product) {
-      dispatch(addToCart({ ...product, quantity: 1 }));
+  useEffect(() => {
+    if (cart.some(item => item.id === id)) {
       setAddedToCart(true);
     }
-  };
+  }, [cart, id]);
+  
+  const handleAddToCart = () => {
+  if (product) {
+    const nombreProduct = product.Nombre
+    const id_products = product.id;
+    const productInCart = cart.filter((item) => {
+      if (item.Nombre === nombreProduct) {
+        return true;
+      }
+      return false;
+    });
+    //console.log(productInCart)
+    if (productInCart===nombreProduct) {
+      // El producto ya está en el carrito
+      console.log('El producto ya existe en el carrito');
+    } else {
+      // Agrega el producto al carrito
+      idCart ? dispatch(agregarAlCarrito(id_products, quantity, idCart)) : console.log("no hay id ")
+      setAddedToCart(true);
+      
+    }
+  }
+};
+
+  
 
   const product = useSelector((state) => state.detail);
-
+  //console.log(product.Nombre)
   return (
     <div className="container mt-5">
       <h1 className="mb-4">Product Detail</h1>
@@ -57,8 +80,19 @@ const Detail = () => {
                   </ul>
                 </div>
               )}
+                <div className="mt-2">
+                <label htmlFor="quantity" style={{ fontWeight: 'bold' }}>Quantity:</label>
+                <input 
+                  type="number" 
+                  id="quantity" 
+                  value={quantity} 
+                  onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                  min="1"
+                  className="quantity-input"
+                />
+              </div>
               <button
-                className={`btn mt-2 ${addedToCart ? 'btn-added' : 'btn-outline-secondary'}`}
+                 className={`btn-agregarCarrito ${addedToCart ? 'added' : ''}`}
                 onClick={handleAddToCart}
                 disabled={addedToCart}
               >
@@ -72,7 +106,7 @@ const Detail = () => {
       ) : (
         <p>Cargando...</p>
       )}
-    
+
     </div>
   );
 };
