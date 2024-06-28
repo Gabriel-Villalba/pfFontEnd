@@ -41,7 +41,7 @@ const Cart = () => {
                 
             </ul>
             <h2 className="total-price">${totalPrice}</h2>
-            <button onClick={handlePurchase} className="purchase-button">Facturar</button>
+            <button onClick={handlePurchase} className="purchase-button">Continuar compra</button>
         </div>
     );
 };

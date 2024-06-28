@@ -19,10 +19,10 @@ function Orders() {
     }, 0);
 
   //*******Mercado Pago****** */
-  initMercadoPago("APP_USR-f30e2368-a4b5-4e70-be3e-da3cedb0b7b1", {
-    locale: "es-AR",
-  });
-console.log(totalPrice)
+    initMercadoPago("APP_USR-f79a29db-4be2-44c9-af24-e54f96d09421", {
+        locale: "es-AR",
+     });
+  
   const createPreference = async () => {
     try {
       const response = await axios.post(CREATE_PREFERENCE_Url, {
@@ -38,7 +38,7 @@ console.log(totalPrice)
   };
 
   const componentPDF = useRef();
- 
+
   console.log(actions);
 
   const generatePDF = useReactToPrint({
@@ -54,11 +54,7 @@ console.log(totalPrice)
   const handleBuy = async () => {
     const id = await createPreference();
     id ? setPreferenceId(id) : alert("Error");
-  };
-
-  //  const handlePurchase = () => {
-  //       alert('Pasarela de pagos del Sr Gabriel');
-  //   };
+  }
 
   return (
     <div className="container">

@@ -53,7 +53,7 @@ const Products = () => {
                                             ))}
                                         </ul>
                                     </div>
-                                )}<button className='button-style'>BUY</button>
+                                )}  
                         
                             </div>
                         </div>
