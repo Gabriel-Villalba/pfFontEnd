@@ -2,7 +2,7 @@ import { Route, Routes,useLocation, useNavigate  } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import Products from "./components/Products/Products.jsx";
 import Detail from "./components/Detail/Detail.jsx";
-import Nav from "./components/NavBar/NavBar.jsx"
+import Nav from "./components/NavBar/navBar.jsx"
 import Form from "./components/Form/Form.jsx"
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import LandingPage from "./components/Landing/LandinPage.jsx";

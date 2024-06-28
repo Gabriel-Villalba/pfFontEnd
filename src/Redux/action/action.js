@@ -5,7 +5,7 @@ import {
   GET_PRODUCT_NAME_url,
   CREATE_PRODUCT_url,
   //UPDATE_PRODUCT_url,
-  //DELETE_PRODUCT_url,
+  DELETE_PRODUCT_url,
   GET_CATEGORIAS_url,
   CREATE_CATEGORIA_url,
   DELETE_CATEGORIA_url,
@@ -79,10 +79,12 @@ export function postProduct(payload) {
 }
 //************DELETE PRODUCTO ***************/ 
 export const deleteProduct = (id) => {
+  console.log("llega hasta aca")
   return async (dispatch) => {
     try {
-      await axios.delete(`DELETE_PRODUCT_url/${id}`);
-      dispatch({ type: "DELETE_PRODUCTS" });
+      await axios.delete(`${DELETE_PRODUCT_url}/${id}`);
+     // console.log(prueba)
+      dispatch(getAllProducts());
     } catch (error) {
       console.error("ACTIONS ERROR");
     }

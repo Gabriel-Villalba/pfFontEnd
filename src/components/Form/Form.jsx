@@ -153,7 +153,7 @@ const Form = () => {
   return (
     <div> 
     <br /> 
-    <h2 className="title">Crear Productos</h2>
+    <h2 className="titleF">Crear Productos</h2>
     <br />
     <div className='formulario-contenedor'>
     
@@ -167,7 +167,7 @@ const Form = () => {
             type="text"
             id="Nombre"
             name="Nombre"
-            placeholder="Nombre"
+            placeholder="Name"
             value={formData.Nombre}
             onChange={handleChange}
             onFocus={() => handleFocus('Nombre')}
@@ -182,7 +182,7 @@ const Form = () => {
             type="text"
             id="Descripcion"
             name="Descripcion"
-            placeholder="Descripción"
+            placeholder="Description"
             value={formData.Descripcion}
             onChange={handleChange}
             onFocus={() => handleFocus('Descripcion')}
@@ -197,7 +197,7 @@ const Form = () => {
             type="text"
             id="Precio"
             name="Precio"
-            placeholder="Precio"
+            placeholder="Price"
             value={formData.Precio === 0 ? '' : formData.Precio}
             onChange={handleChange}
             onFocus={() => handleFocus('Precio')}
@@ -226,7 +226,7 @@ const Form = () => {
             type="text"
             id="Brand"
             name="Brand"
-            placeholder="Marca"
+            placeholder="Brand"
             value={formData.Brand}
             onChange={handleChange}
             onFocus={() => handleFocus('Brand')}
@@ -254,7 +254,7 @@ const Form = () => {
         
 
         <div>
-          <label className='campoLabelSlect' htmlFor="onOffer">En oferta:</label>
+          <label className='campoLabelSlect' htmlFor="onOffer">On Offer:</label>
           <input
             type="checkbox"
             id="onOffer"
@@ -272,14 +272,14 @@ const Form = () => {
             onChange={handleCategoryChange}
             value={formData.name}
           >
-            <option value="">Seleccionar categoría</option>
+            <option value="">Select category</option>
             {categories.map(categoria => (
               <option key={categoria.id} value={categoria.name}>{categoria.name}</option>
             ))}
           </select>
           {showValidation.name && validations.name && <p className='Validacion'>{validations.name}</p>}
         </div>
-        <button type="submit">Create Product</button>
+        <button type="submit" className="createButton">Create Product</button>
       </form>
     </div>
     </div>
